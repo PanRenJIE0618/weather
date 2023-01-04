@@ -8,6 +8,7 @@ html, body {
 }
 body {
     position: relative;
+    overflow: hidden;
 }
 path {
     fill: transparent;
@@ -55,14 +56,15 @@ path {
     margin: auto;
     transform: translateZ(100px);
     display: flex;
-    flex-direction: column;
     flex-wrap: nowrap;
+    flex-direction: column;
     justify-content: center;
+    align-items: center ;
     color: #FFF;
 }
 #weather p {
     width: 440px;
-    margin: 5px 0;
+    margin: 5px;
 }
 #bm {
     width: 600px;

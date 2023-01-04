@@ -12,10 +12,24 @@ const About_seven_days = document.querySelector('#About_seven_days')
 
 var browserwidth = document.documentElement.clientWidth
 var browserheight = document.documentElement.clientHeight
-console.log(browserheight)
 
+if(browserheight <= 770) {
+    About_seven_days.style.height = '100%'
+    About_seven_days.style.width = '200px'
+    About_seven_days.style.flexWrap = "wrap"
+    About_seven_days.style.margin = "0"
+    About_seven_days.style.alignContent = "flex-start"
+}
 if(browserheight <= 850) {
+    About_seven_days.style.width = '200px'
+    About_seven_days.style.height = '100%'
+    About_seven_days.style.margin = "0"
     About_seven_days.style.flexDirection = "column";
+} else {
+    About_seven_days.style.width = '100%'
+    About_seven_days.style.height = '150px'
+    About_seven_days.style.margin = "0 auto"
+    About_seven_days.style.flexDirection = "row";
 }
 console.log(box)
 box.addEventListener('mousemove',(e) => {
@@ -33,7 +47,6 @@ box.addEventListener('mouseleave',() => {
 
 window.addEventListener('resize',(res) => {
     browserheight = document.documentElement.clientHeight
-    console.log(browserheight)
     if(browserheight <= 770) {
         About_seven_days.style.height = '100%'
         About_seven_days.style.width = '200px'

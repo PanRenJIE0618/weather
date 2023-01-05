@@ -13,6 +13,7 @@ var today = {}
 var todaynature = {}
 var sevendaynature
 var sevenday = []
+var operate
 var browserwidth = document.documentElement.clientWidth
 var browserheight = document.documentElement.clientHeight
 setElementCompatibility()
@@ -88,8 +89,8 @@ function getWeather() {
             today = data
             //xue、lei、shachen、bingbao、yu、yin
             Status_box.style.background = wearherObj[data.wea_img].color
-            var de =  UpWeather(wearherObj[data.wea_img].img,'bm',todaynature)
-            console.log(de)
+            //接收修改 lottie 属性值
+            operate =  UpWeather(wearherObj[data.wea_img].img,'bm',todaynature)
         });
 }
 //获取近七天天气
@@ -103,6 +104,8 @@ function getDailyHotSearches() {
         })
         .then(data => {
             console.log(data)
+            data.data.shift()
+            data.data.unshift(today)
             sevenday = data.data
             var arr = []
             data.data.forEach((item,index) => {
@@ -119,10 +122,7 @@ function getDailyHotSearches() {
             var dayChildren = Array.from(About_seven_days.children)
             dayChildren.forEach((item ,index)=> {
                 item.addEventListener('click', (e) => {
-                    var operate
-                    console.log(e)
-                    console.log(index)
-                    console.log(sevenday[index])
+                    //修改背景色
                     Status_box.style.background = wearherObj[sevenday[index].wea_img].color
                     if(index == 0) {
                         weather.innerHTML = `
@@ -135,7 +135,6 @@ function getDailyHotSearches() {
                             <p>城市今天最高气温/最低气温：${today.tem_day}℃/${today.tem_night}℃</p>
                             <p>当前风向/风速：${today.win}/${today.win_speed}</p>
                         `
-                        operate = UpWeather(wearherObj[sevenday[index].wea_img].img,'bm',todaynature)
                         operate.destroy(todaynature)
                         UpWeather(wearherObj[sevenday[index].wea_img].img,'bm',todaynature)
                         return
@@ -147,7 +146,6 @@ function getDailyHotSearches() {
                         <p>城市当日最高气温/最低气温：${sevenday[index].tem_day}℃/${sevenday[index].tem_night}℃</p>
                         <p>当日风向/风速：${sevenday[index].win}/${sevenday[index].win_speed}</p>
                     `
-                    operate = UpWeather(wearherObj[sevenday[index].wea_img].img,'bm',todaynature)
                     operate.destroy(todaynature)
                     UpWeather(wearherObj[sevenday[index].wea_img].img,'bm',todaynature)
                 })

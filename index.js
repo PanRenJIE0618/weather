@@ -1,14 +1,30 @@
 window.onload = function () {
-    // setInterval(()=> {
-    //     let time = document.querySelector('#time')
-    //     time.innerHTML = dayjs().format('HH:mm:ss')
-    // },1000)
+    setInterval(()=> {
+        // let time = document.querySelector('#time')
+        // time.innerHTML = dayjs().format('HH:mm:ss')
+        var time = dayjs().format('HH:mm:ss')
+        time = time.split(":").join("")
+        // console.log(time)
+        if(time > 200000 || time < 70000) {
+            document.querySelector('body').style.background = "linear-gradient(135deg,#232526,#414345)"
+        } else {
+            document.querySelector('body').style.background = "linear-gradient(135deg,#ece9e6,#ffffff)"
+        }
+    },1000)
+    setInterval(() => {
+        console.log("每小时更新一次")
+        getDailyHotSearches()
+        getWeather()
+    },3600000)
     getDailyHotSearches()
     getWeather()
+
 }
 const box = document.querySelector('#box')
 const Status_box = document.querySelector('#Status_box')
 const About_seven_days = document.querySelector('#About_seven_days')
+var todayindex = 0
+var sevendayindex = 0
 var today = {}
 var todaynature = {}
 var sevendaynature
@@ -46,6 +62,30 @@ const wearherObj = {
         img:'fog.json',
         color:'linear-gradient(135deg,#00416a,#e4e5e6)'
     },
+    yu: {
+        img:'Rain.json',
+        color:'linear-gradient(135deg,#00416a,#e4e5e6)'
+    },
+    xue: {
+        img:'light-snow.json',
+        color:'linear-gradient(135deg,#00416a,#e4e5e6)'
+    },
+    lei: {
+        img:'thunder.json',
+        color:'linear-gradient(135deg,#00416a,#e4e5e6)'
+    },
+    yin: {
+        img:'cloudy-03.json',
+        color:'linear-gradient(135deg,#00416a,#e4e5e6)'
+    },
+    shachen: {
+        img:'thunder.json',
+        color:'linear-gradient(135deg,#00416a,#e4e5e6)'
+    },
+    bingbao: {
+        img:'thunder.json',
+        color:'linear-gradient(135deg,#00416a,#e4e5e6)'
+    }
 }
 //元素自适应
 function setElementCompatibility() {
@@ -85,8 +125,9 @@ function getWeather() {
                     <p>当前风向/风速：${data.win}/${data.win_speed}</p>
 <!--                    <p>当前星期：${data.week}</p>-->
                 `
-            console.log(data)
+            // console.log(data)
             today = data
+            todayindex =data.nums
             //xue、lei、shachen、bingbao、yu、yin
             Status_box.style.background = wearherObj[data.wea_img].color
             //接收修改 lottie 属性值
@@ -103,7 +144,9 @@ function getDailyHotSearches() {
             }
         })
         .then(data => {
+            // console.log(data)
             console.log(data)
+            sevendayindex = data.nums
             data.data.shift()
             data.data.unshift(today)
             sevenday = data.data
@@ -155,6 +198,8 @@ function getDailyHotSearches() {
                 let wath = document.getElementById(`wath${(index+1)}`)
                 wath.style.background = wearherObj[item.wea_img].color
             })
+            console.log("当日的API请求次数", todayindex,"/500")
+            console.log("七日的API请求次数", sevendayindex,"/500")
         });
 }
 //更新当前天气情况
